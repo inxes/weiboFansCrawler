@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="94fbbcca-a19e-49ca-877b-a657dbfca6bb" name="Default Changelist" comment="" />
+    <list default="true" id="94fbbcca-a19e-49ca-877b-a657dbfca6bb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weiboFansCrawler/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/weiboFansCrawler/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weiboFansCrawler/spiders/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/weiboFansCrawler/spiders/example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weiboFansCrawler/spiders/fansCrawler.py" beforeDir="false" afterPath="$PROJECT_DIR$/weiboFansCrawler/spiders/fansCrawler.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,8 +18,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/weiboFansCrawler/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
-              <caret line="30" column="58" selection-start-line="30" selection-start-column="58" selection-end-line="30" selection-end-column="58" />
+            <state relative-caret-position="242">
+              <caret line="13" column="23" selection-start-line="13" selection-end-line="13" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -22,20 +27,32 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/weiboFansCrawler/spiders/fansCrawler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="807">
-              <caret line="55" column="95" selection-start-line="55" selection-start-column="95" selection-end-line="55" selection-end-column="95" />
+            <state relative-caret-position="-2190">
+              <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
               <folding>
-                <element signature="e#24#63#0" expanded="true" />
+                <element signature="e#24#37#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/scrapy/spiders/__init__.py">
+        <entry file="file://$PROJECT_DIR$/quotes-1005055448635862.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
+            <state relative-caret-position="208">
+              <caret line="8" column="7" lean-forward="true" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/weiboFansCrawler/spiders/example.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="381">
+              <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+              <folding>
+                <element signature="e#24#37#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -58,16 +75,26 @@
       <find>W_btn_b</find>
       <find>YF-Page-G0</find>
       <find>SPLASH_COOKIES_DEBUG</find>
+      <find>img</find>
+      <find>json.loads(</find>
+      <find>yield r</find>
+      <find>get_formdata</find>
+      <find>HTTPERROR_ALLOWED_CODES</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
     </dirStrings>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/weiboFansCrawler/settings.py" />
         <option value="$PROJECT_DIR$/weiboFansCrawler/quotes-1005055448635862.txt" />
+        <option value="$PROJECT_DIR$/weiboFansCrawler/spiders/example.py" />
+        <option value="$PROJECT_DIR$/weiboFansCrawler/settings.py" />
+        <option value="$PROJECT_DIR$/quotes-1005055448635862.html" />
         <option value="$PROJECT_DIR$/weiboFansCrawler/spiders/fansCrawler.py" />
       </list>
     </option>
@@ -76,12 +103,12 @@
     <option name="width" value="2560" />
     <option name="height" value="1440" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -108,6 +135,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -141,18 +169,19 @@
       <updated>1576641042539</updated>
       <workItem from="1576641043691" duration="17881000" />
       <workItem from="1576745648776" duration="816000" />
-      <workItem from="1576748007784" duration="2242000" />
+      <workItem from="1576748007784" duration="2503000" />
+      <workItem from="1576808069974" duration="19173000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20939000" />
+    <option name="totallyTimeSpent" value="40373000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1440" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14177918" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14257348" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -166,7 +195,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.2029197" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.38029197" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -186,28 +215,11 @@
     <entry file="file://$PROJECT_DIR$/weiboFansCrawler/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/weiboFansCrawler/spiders/example.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/weiboFansCrawler/quotes-5448635862.txt" />
     <entry file="file://$PROJECT_DIR$/weiboFansCrawler/quotes-5448635862.html" />
     <entry file="file://$PROJECT_DIR$/weiboFansCrawler/quotes-1005055448635862.html" />
     <entry file="file://$PROJECT_DIR$/weiboFansCrawler/quotes-1005055448635862.txt" />
     <entry file="file://$PROJECT_DIR$/quotes-1005055448635862.txt" />
-    <entry file="file://$PROJECT_DIR$/weiboFansCrawler/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="30" column="58" selection-start-line="30" selection-start-column="58" selection-end-line="30" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scrapy.cfg">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/scrapy/spiders/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="215">
@@ -215,12 +227,93 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/weiboFansCrawler/spiders/laoziliao.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ziliao-rmrb.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ziliao-1946-1-2.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ziliao-1946-1-3.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="15" lean-forward="true" selection-start-column="1" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ziliao-1946-1-1.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ziliao-1946-5-11.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ziliao-1946-5-23.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ziliao-1946-5-9.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ziliao-1946-5-26.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/urllib/parse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="119" selection-start-line="119" selection-end-line="119" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ziliao-1946-05-15-1.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-813" />
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="298" column="4" selection-start-line="298" selection-start-column="4" selection-end-line="298" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/weiboFansCrawler/spiders/example.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+          <folding>
+            <element signature="e#24#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scrapy.cfg">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/quotes-1005055448635862.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="8" column="7" lean-forward="true" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/weiboFansCrawler/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="13" column="23" selection-start-line="13" selection-end-line="13" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/weiboFansCrawler/spiders/fansCrawler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="807">
-          <caret line="55" column="95" selection-start-line="55" selection-start-column="95" selection-end-line="55" selection-end-column="95" />
+        <state relative-caret-position="-2190">
+          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
           <folding>
-            <element signature="e#24#63#0" expanded="true" />
+            <element signature="e#24#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
