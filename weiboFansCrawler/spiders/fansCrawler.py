@@ -133,75 +133,75 @@ class FanscrawlerSpider(scrapy.Spider):
             print('爬取的好友id列表：', fansids)
 
             if next_pages is not None:
-                recursivePageInfo(response, next_pages, self)
+                self.recursivePageInfo(response, next_pages, self)
             # 粉丝信息写入文件
             for fansid in fansids:
-                dealFansId(fansid, filetxt, self)
+                self.dealFansId(fansid, filetxt, self)
             # 把文件名写入config.json 的user_id_list
             configpath = 'config.json'
 
             # 如果文件存在
             if os.path.exists(configpath):
-                existDunpFile(configpath, fansids, filetxt)
+                self.existDunpFile(configpath, fansids, filetxt)
             else:
-                notExistDumpFile(configpath, fansids, filetxt)
+                self.notExistDumpFile(configpath, fansids, filetxt)
         time.sleep(1)
         print('粉丝总数：', self.count)
 
 
-def dealFansId(fansid, filetxt, self):
-    print('爬取的好友id：', fansid.split("&")[0][3:])
-    with open(filetxt, 'a+') as ft:
-        ft.write(fansid.split("&")[0][3:] + ' ')
-    self.count = self.count + 1
-    self.log('Saved file %s' % filetxt)
+    def dealFansId(fansid, filetxt, self):
+        print('爬取的好友id：', fansid.split("&")[0][3:])
+        with open(filetxt, 'a+') as ft:
+            ft.write(fansid.split("&")[0][3:] + ' ')
+        self.count = self.count + 1
+        self.log('Saved file %s' % filetxt)
 
 
-def recursivePageInfo(response, next_pages, self):
-    # urlJoin 处理相对路径
-    next_page = response.urljoin(next_pages)
-    print('捕获到下一页：', next_page)
-    yield scrapy.Request(next_page, callback=self.parse)
+    def recursivePageInfo(response, next_pages, self):
+        # urlJoin 处理相对路径
+        next_page = response.urljoin(next_pages)
+        print('捕获到下一页：', next_page)
+        yield scrapy.Request(next_page, callback=self.parse)
 
 
-# 写入已经存在的文件
-def existDunpFile(configpath, fansids, filetxt):
-    # 读取文件 读取时候文件指针放在文件头部
-    with open(configpath, 'r+') as load_f:
-        load_dict = json.load(load_f)
-        print("读取到的json内容:", load_dict)
-        # 判断好友id是否存在
-        if fansids is not None and len(fansids) >= 0:
-            user_id_list = load_dict['user_id_list']
-            print("user_id_list的集合内容:", user_id_list)
-            # 写入的是之前的文件名
-            if filetxt not in user_id_list:
-                user_id_list.append(filetxt)
+    # 写入已经存在的文件
+    def existDunpFile(configpath, fansids, filetxt):
+        # 读取文件 读取时候文件指针放在文件头部
+        with open(configpath, 'r+') as load_f:
+            load_dict = json.load(load_f)
+            print("读取到的json内容:", load_dict)
+            # 判断好友id是否存在
+            if fansids is not None and len(fansids) >= 0:
+                user_id_list = load_dict['user_id_list']
                 print("user_id_list的集合内容:", user_id_list)
-                print("拼接的config内容:", load_dict)
-                print("当前文件指针位置", load_f.tell())
-                load_f.seek(0, 0)
-                print("重置后文件指针位置", load_f.tell())
-                json.dump(load_dict, load_f)
+                # 写入的是之前的文件名
+                if filetxt not in user_id_list:
+                    user_id_list.append(filetxt)
+                    print("user_id_list的集合内容:", user_id_list)
+                    print("拼接的config内容:", load_dict)
+                    print("当前文件指针位置", load_f.tell())
+                    load_f.seek(0, 0)
+                    print("重置后文件指针位置", load_f.tell())
+                    json.dump(load_dict, load_f)
 
 
-# 写入不存在的文件
-def notExistDumpFile(configpath, fansids, filetxt):
-    # 文件不存在直接写一个config
-    with open(configpath, 'w') as cf:
-        # 创建赋值
-        if fansids is not None and len(fansids) >= 0:
-            dict = {'user_id_list': [],
-                    'filter': 1,
-                    'since_date': time.strftime('%Y-%m-%d', time.localtime(time.time())),
-                    'write_mode': ["csv"], 'mysql_config': {
-                    'host': 'localhost', 'port': 3306, 'user': 'root', 'password': '123456',
-                    'charset': 'utf8mb4'
-                }}
+    # 写入不存在的文件
+    def notExistDumpFile(configpath, fansids, filetxt):
+        # 文件不存在直接写一个config
+        with open(configpath, 'w') as cf:
+            # 创建赋值
+            if fansids is not None and len(fansids) >= 0:
+                dict = {'user_id_list': [],
+                        'filter': 1,
+                        'since_date': time.strftime('%Y-%m-%d', time.localtime(time.time())),
+                        'write_mode': ["csv"], 'mysql_config': {
+                        'host': 'localhost', 'port': 3306, 'user': 'root', 'password': '123456',
+                        'charset': 'utf8mb4'
+                    }}
 
-            print("新创建的config对象", json.dumps(dict))
-            print("文件名字", filetxt)
-            user_id_list = dict['user_id_list']
-            user_id_list.append(filetxt)
-            json.dump(dict, cf)
-            print("user_id_list的集合内容:", dict)
+                print("新创建的config对象", json.dumps(dict))
+                print("文件名字", filetxt)
+                user_id_list = dict['user_id_list']
+                user_id_list.append(filetxt)
+                json.dump(dict, cf)
+                print("user_id_list的集合内容:", dict)
