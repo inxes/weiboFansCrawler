@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#from scrapy_splash import SplashRequest
 import os
 
 import scrapy
@@ -17,6 +16,8 @@ class FanscrawlerSpider(scrapy.Spider):
     cus_retry_times = 10
 
     count = 0
+
+    time = time.time()
 
     custom_settings = {
         "RANDOM_DELAY": 3,
@@ -73,7 +74,8 @@ class FanscrawlerSpider(scrapy.Spider):
         }
 
         urls = [
-            'https://weibo.com/p/1006051672785037/follow?relate=fans&from=100605&wvr=6&mod=headfans&current=fans#place'
+            # 'https://weibo.com/5448635862/fans?from=100505&wvr=6&mod=headfans&current=fans#place', # weibo.com/user_id
+            'https://weibo.com/2815543444/fans?from=100505&wvr=6&mod=headfans&current=fans#place'
         ]
 
         for url in urls:
@@ -108,6 +110,11 @@ class FanscrawlerSpider(scrapy.Spider):
                     response.url, retries
                 ))
 
+        page = response.url.split("/")[-2]
+        # isotimeformat = '%Y%m%d%X'
+        #
+        # date = time.strftime(isotimeformat, time.localtime(time.time()))
+        filetxt = '/Users/cindy/Documents/allstar/weibo-crawler/quotes-%s-%s.txt' % (page, self.time)
         # body = script[8]
         for script in scripts:
             if json.loads(script).get('html') is None:
@@ -120,8 +127,6 @@ class FanscrawlerSpider(scrapy.Spider):
             next_pages = virtual_response.css('.page.next.S_txt1.S_line1::attr(href)').extract_first()
             # 写入文件
             fansids = virtual_response.css("img::attr(usercard)").extract()
-            page = response.url.split("/")[-2]
-            filetxt = 'quotes-%s.txt' % page
             # fansids = response.css(".S_txt1 a::attr(href)").extract()
             print('爬取的好友id列表：', fansids)
 
@@ -164,7 +169,8 @@ class FanscrawlerSpider(scrapy.Spider):
                     #创建赋值
                     if fansids is not None and len(fansids) >= 0:
 
-                        dict = {'user_id_list': [], 'filter': 1,
+                        dict = {'user_id_list': [],
+                                'filter': 1,
                                 'since_date': time.strftime('%Y-%m-%d', time.localtime(time.time())),
                                 'write_mode': ["csv"], 'mysql_config': {
                                 'host': 'localhost', 'port': 3306, 'user': 'root', 'password': '123456',
@@ -177,5 +183,5 @@ class FanscrawlerSpider(scrapy.Spider):
                         user_id_list.append(filetxt)
                         json.dump(dict, cf)
                         print("user_id_list的集合内容:", dict)
-            time.sleep(1)
+        time.sleep(1)
         print('粉丝总数：', self.count)
