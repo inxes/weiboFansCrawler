@@ -143,8 +143,8 @@ class FanscrawlerSpider(scrapy.Spider):
 
             #如果文件存在
             if os.path.exists(configpath):
-                #读取文件
-                with open(configpath, 'r') as load_f:
+                #读取文件 读取时候文件指针放在文件头部
+                with open(configpath, 'r+') as load_f:
                     load_dict = json.load(load_f)
                     print("读取到的json内容:", load_dict)
                 #判断好友id是否存在
@@ -153,9 +153,11 @@ class FanscrawlerSpider(scrapy.Spider):
                     print("user_id_list的集合内容:", user_id_list)
                     print("var1的类型===", isinstance(user_id_list, list))
                     #写入的是之前的文件名
-                    user_id_list.append(filetxt)
-                    print("user_id_list的集合内容:", user_id_list)
-                    print("拼接的config内容:", load_dict)
+                    if filetxt not in user_id_list:
+                        user_id_list.append(filetxt)
+                        print("user_id_list的集合内容:", user_id_list)
+                        print("拼接的config内容:", load_dict)
+                        json.dump(load_dict, load_f)
             else:
                 #文件不存在直接写一个config
                 with open(configpath, 'w') as cf:
