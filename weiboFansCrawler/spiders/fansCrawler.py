@@ -25,6 +25,7 @@ class Config(object):
     original_video_download=1
     retweet_video_download= 0
     mysql_config = MySqlConfig()
+
     def __str__(self):
         return "Config\n user_id_list: %s \t filter: %d \t since_date:%s \t write_mode:%s \t original_pic_download:%d \t retweet_pic_download:%d \t original_video_download:%d \t retweet_video_download:%d" % (self.user_id_list, self.filter,self.since_date,self.write_mode,self.original_pic_download,self.retweet_pic_download,self.original_video_download,self.retweet_video_download)
 
@@ -52,17 +53,17 @@ class FanscrawlerSpider(scrapy.Spider):
         }
         # 指定cookies
         cookies = {
-            'ALF': '1608531189',
-            'Apache': '9634322238528.553.1576994852721',
-            'SCF': 'ArUPDsCoay_hQKc_S3oxn2Gphd0vI9KqDY6ddPklgq7Yjz4PFpa6q65-UNTT5ZFvRdifXUJDMPlt08WxcBOUa8k.',
-            'SINAGLOBAL': '9634322238528.553.1576994852721',
-            'SSOLoginState': '1576995190',
-            'SUB': '_2A25w-3knDeRhGeNN6VAT8CfJzT6IHXVQce3vrDV8PUNbmtANLU7RkW9NSd-4-30-N0RfpACAno_Br3mE6qKFFNfk',
+            'ALF': '1577672083',
+            'Apache': '6268048979834.457.1577067237128',
+            'SCF': 'ApujhM8uDdqNvzdLTqI849Z5w7PGPP8Cse1Ti5EtzTJiM3Qk4qSRPWtU1_UKbbPeH-4IZ75KEydqbO3FIeQRI0E.',
+            'SINAGLOBAL': '6268048979834.457.1577067237128',
+            'SSOLoginState': '1577067234',
+            'SUB': '_2A25zBFNFDeRhGeNN6VAT8CfJzT6IHXVQcMONrDV8PUNbmtAKLUbYkW9NSd-4-wxdg9wEXMJMk8r9xJdpNyZ5JlpJ',
             'SUBP': '0033WrSXqPxfM725Ws9jqgMF55529P9D9WhEE0KKnuqJiTM-1Qw8R3q_5JpX5K2hUgL.Fo-0eozEeh.fSoz2dJLoIEXLxKBLBonL12zLxK-LBo2LBo2LxK-LB.BL1KeLxK-L1KzL12eLxK-LBo5L1-2t',
-            'SUHB': '0ftpnfuoSb8nCI',
-            'ULV': '1576994852727:1:1:1:9634322238528.553.1576994852721:',
+            'SUHB': '0xnClA7lVuxlH4',
+            'ULV': '1577067237134:1:1:1:6268048979834.457.1577067237128:',
             'UOR': ',,www.baidu.com',
-            'Ugrow-G0': 'e1a5a1aae05361d646241e28c550f987',
+            'Ugrow-G0': '7e0e6b57abe2c2f76f677abd9a9ed65d',
             'YF-Page-G0': '753ea17f0c76317e0e3d9670fa168584|1576995465|1576995464',
             'YF-V5-G0': 'b588ba2d01e18f0a91ee89335e0afaeb',
             '_s_tentry': '-',
@@ -71,7 +72,7 @@ class FanscrawlerSpider(scrapy.Spider):
             'un': '17621142248',
             'wb_view_log': '1680*10502',
             'wb_view_log_5322209562':'1680*10502',
-            'webim_unReadCount': '%7B%22time%22%3A1576996761007%2C%22dm_pub_total%22%3A0%2C%22chat_group_client%22%3A0%2C%22allcountNum%22%3A0%2C%22msgbox%22%3A0%7D',
+            'webim_unReadCount': '%7B%22time%22%3A1577067588477%2C%22dm_pub_total%22%3A0%2C%22chat_group_client%22%3A0%2C%22allcountNum%22%3A3%2C%22msgbox%22%3A0%7D',
             # 'TC-Page-G0': '753ea17f0c76317e0e3d9670fa168584|1576995465|1576995464',
             # 'TC-V5-G0': 'eb26629f4af10d42f0485dca5a8e5e20',
             #
@@ -188,6 +189,7 @@ class FanscrawlerSpider(scrapy.Spider):
                         config=Config()
                         print("编码前:",config)
                         print("新创建的config对象",json.dumps(config))
+
                         print("文件名字",filetxt)
                         config.user_id_list.append(filetxt)
                         json.dump(config, cf)

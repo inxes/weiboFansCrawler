@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="94fbbcca-a19e-49ca-877b-a657dbfca6bb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weiboFansCrawler/spiders/fansCrawler.py" beforeDir="false" afterPath="$PROJECT_DIR$/weiboFansCrawler/spiders/fansCrawler.py" afterDir="false" />
     </list>
@@ -81,8 +80,16 @@
       <workItem from="1576808069974" duration="19173000" />
       <workItem from="1576990762576" duration="1708000" />
       <workItem from="1577003924882" duration="55000" />
-      <workItem from="1577066979302" duration="13000" />
+      <workItem from="1577066979302" duration="636000" />
     </task>
+    <task id="LOCAL-00001" summary="添加部分文件操作代码 还有些问题">
+      <created>1577067008108</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1577067008108</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -92,12 +99,26 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/weiboFansCrawler/weiboFansCrawler" />
     </ignored-roots>
+    <MESSAGE value="添加部分文件操作代码 还有些问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加部分文件操作代码 还有些问题" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="434" y="92" key="CommitChangelistDialog2" timestamp="1577067007916">
+      <screen x="0" y="23" width="1680" height="937" />
+    </state>
+    <state x="434" y="92" key="CommitChangelistDialog2/0.23.1680.937@0.23.1680.937" timestamp="1577067007916" />
+    <state x="168" y="106" key="DiffContextDialog" timestamp="1577067051685">
+      <screen x="0" y="23" width="1680" height="937" />
+    </state>
+    <state x="168" y="106" key="DiffContextDialog/0.23.1680.937@0.23.1680.937" timestamp="1577067051685" />
     <state x="349" y="132" key="SettingsEditor" timestamp="1576990857409">
       <screen x="0" y="23" width="1680" height="941" />
     </state>
     <state x="349" y="132" key="SettingsEditor/0.23.1680.941@0.23.1680.941" timestamp="1576990857409" />
+    <state x="440" y="231" key="Vcs.Push.Dialog.v2" timestamp="1577067053183">
+      <screen x="0" y="23" width="1680" height="937" />
+    </state>
+    <state x="440" y="231" key="Vcs.Push.Dialog.v2/0.23.1680.937@0.23.1680.937" timestamp="1577067053183" />
   </component>
   <component name="masterDetails">
     <states>
