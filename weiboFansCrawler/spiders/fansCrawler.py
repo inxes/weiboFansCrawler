@@ -7,30 +7,6 @@ import re
 import json
 import time
 
-class MySqlConfig(object):
-    host='localhost'
-    port=3306
-    user='root'
-    password='123456'
-    charset='utf8mb4'
-
-
-class Config(object):
-    user_id_list:[]
-    filter = 1
-    since_date=time.strftime('%Y-%m-%d',time.localtime(time.time()))
-    write_mode= ["csv"]
-    original_pic_download= 1
-    retweet_pic_download=0
-    original_video_download=1
-    retweet_video_download= 0
-    mysql_config = MySqlConfig()
-
-    def __str__(self):
-        return "Config\n user_id_list: %s \t filter: %d \t since_date:%s \t write_mode:%s \t original_pic_download:%d \t retweet_pic_download:%d \t original_video_download:%d \t retweet_video_download:%d" % (self.user_id_list, self.filter,self.since_date,self.write_mode,self.original_pic_download,self.retweet_pic_download,self.original_video_download,self.retweet_video_download)
-
-
-
 class FanscrawlerSpider(scrapy.Spider):
     name = 'fansCrawler'
     #爬网的域的字符串的可选列表
@@ -186,13 +162,18 @@ class FanscrawlerSpider(scrapy.Spider):
                     #创建赋值
                     if fansids is not None and len(fansids) >= 0:
 
-                        config=Config()
-                        print("编码前:",config)
-                        print("新创建的config对象",json.dumps(config))
+                        dict = {'user_id_list': [], 'filter': 1,
+                                'since_date': time.strftime('%Y-%m-%d', time.localtime(time.time())),
+                                'write_mode': ["csv"], 'mysql_config': {
+                                'host': 'localhost', 'port': 3306, 'user': 'root', 'password': '123456',
+                                'charset': 'utf8mb4'
+                            }}
 
+                        print("新创建的config对象",json.dumps(dict))
                         print("文件名字",filetxt)
-                        config.user_id_list.append(filetxt)
-                        json.dump(config, cf)
-                        print("user_id_list的集合内容:", config)
+                        user_id_list = dict['user_id_list']
+                        user_id_list.append(filetxt)
+                        json.dump(dict, cf)
+                        print("user_id_list的集合内容:", dict)
             time.sleep(1)
         print('粉丝总数：', self.count)
