@@ -133,12 +133,12 @@ class FanscrawlerSpider(scrapy.Spider):
             print('爬取的好友id列表：', fansids)
 
             if next_pages is not None:
-                self.recursivePageInfo(response, next_pages, self)
+                self.recursivePageInfo(response, next_pages)
             # 粉丝信息写入文件
             for fansid in fansids:
-                self.dealFansId(fansid, filetxt, self)
+                self.dealFansId(fansid, filetxt)
             # 把文件名写入config.json 的user_id_list
-            configpath = 'config.json'
+            configpath = './config.json'
 
             # 如果文件存在
             if os.path.exists(configpath):
@@ -149,7 +149,7 @@ class FanscrawlerSpider(scrapy.Spider):
         print('粉丝总数：', self.count)
 
 
-    def dealFansId(fansid, filetxt, self):
+    def dealFansId(self,fansid, filetxt):
         print('爬取的好友id：', fansid.split("&")[0][3:])
         with open(filetxt, 'a+') as ft:
             ft.write(fansid.split("&")[0][3:] + ' ')
@@ -157,7 +157,7 @@ class FanscrawlerSpider(scrapy.Spider):
         self.log('Saved file %s' % filetxt)
 
 
-    def recursivePageInfo(response, next_pages, self):
+    def recursivePageInfo(self,response, next_pages):
         # urlJoin 处理相对路径
         next_page = response.urljoin(next_pages)
         print('捕获到下一页：', next_page)
@@ -165,7 +165,7 @@ class FanscrawlerSpider(scrapy.Spider):
 
 
     # 写入已经存在的文件
-    def existDunpFile(configpath, fansids, filetxt):
+    def existDunpFile(self,configpath, fansids, filetxt):
         # 读取文件 读取时候文件指针放在文件头部
         with open(configpath, 'r+') as load_f:
             load_dict = json.load(load_f)
@@ -186,7 +186,7 @@ class FanscrawlerSpider(scrapy.Spider):
 
 
     # 写入不存在的文件
-    def notExistDumpFile(configpath, fansids, filetxt):
+    def notExistDumpFile(self,configpath, fansids, filetxt):
         # 文件不存在直接写一个config
         with open(configpath, 'w') as cf:
             # 创建赋值

@@ -1,37 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="94fbbcca-a19e-49ca-877b-a657dbfca6bb" name="Default Changelist" comment="">
+    <list default="true" id="94fbbcca-a19e-49ca-877b-a657dbfca6bb" name="Default Changelist" comment="优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/weiboFansCrawler/spiders/fansCrawler.py" beforeDir="false" afterPath="$PROJECT_DIR$/weiboFansCrawler/spiders/fansCrawler.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>SPIDER_MODULES</find>
-      <find>ccokie</find>
-      <find>ROBOTSTXT_OBEY</find>
-      <find>S_txt1</find>
-      <find>login_sid_t</find>
-      <find>关注</find>
-      <find>W_btn_b</find>
-      <find>YF-Page-G0</find>
-      <find>SPLASH_COOKIES_DEBUG</find>
-      <find>img</find>
-      <find>json.loads(</find>
-      <find>yield r</find>
-      <find>get_formdata</find>
-      <find>HTTPERROR_ALLOWED_CODES</find>
-    </findStrings>
-    <dirStrings>
-      <dir>$PROJECT_DIR$</dir>
-    </dirStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="2560" />
@@ -46,10 +28,19 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/weiboFansCrawler" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/weiboFansCrawler" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/weiboFansCrawler" />
+    </key>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -79,7 +70,7 @@
       <workItem from="1576808069974" duration="19173000" />
       <workItem from="1576990762576" duration="1708000" />
       <workItem from="1577003924882" duration="55000" />
-      <workItem from="1577066979302" duration="916000" />
+      <workItem from="1577066979302" duration="12760000" />
     </task>
     <task id="LOCAL-00001" summary="添加部分文件操作代码 还有些问题">
       <created>1577067008108</created>
@@ -95,7 +86,49 @@
       <option name="project" value="LOCAL" />
       <updated>1577067819567</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="添加部分文件操作代码 还有些问题">
+      <created>1577068096658</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1577068096658</updated>
+    </task>
+    <task id="LOCAL-00004" summary="添加写入文件部分逻辑 还需要优化">
+      <created>1577073635432</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1577073635432</updated>
+    </task>
+    <task id="LOCAL-00005" summary="优化">
+      <created>1577080094821</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1577080094821</updated>
+    </task>
+    <task id="LOCAL-00006" summary="拆分结构">
+      <created>1577086199829</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1577086199829</updated>
+    </task>
+    <task id="LOCAL-00007" summary="优化">
+      <created>1577086409354</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1577086409354</updated>
+    </task>
+    <task id="LOCAL-00008" summary="添加config文件和weibo 工具">
+      <created>1577087445199</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1577087445199</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,25 +139,54 @@
       <path value="$PROJECT_DIR$/weiboFansCrawler/weiboFansCrawler" />
     </ignored-roots>
     <MESSAGE value="添加部分文件操作代码 还有些问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加部分文件操作代码 还有些问题" />
+    <MESSAGE value="添加写入文件部分逻辑 还需要优化" />
+    <MESSAGE value="拆分结构" />
+    <MESSAGE value="优化" />
+    <MESSAGE value="添加config文件和weibo 工具" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加config文件和weibo 工具" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="434" y="92" key="CommitChangelistDialog2" timestamp="1577067819473">
-      <screen x="0" y="23" width="1680" height="937" />
+    <state x="434" y="92" key="CommitChangelistDialog2" timestamp="1577087472788">
+      <screen x="0" y="23" width="1680" height="941" />
     </state>
+    <state x="434" y="92" key="CommitChangelistDialog2/-2560.-201.2560.1417/0.23.1680.941@0.23.1680.941" timestamp="1577087472788" />
     <state x="434" y="92" key="CommitChangelistDialog2/0.23.1680.937@0.23.1680.937" timestamp="1577067819473" />
-    <state x="168" y="106" key="DiffContextDialog" timestamp="1577067051685">
-      <screen x="0" y="23" width="1680" height="937" />
+    <state x="434" y="92" key="CommitChangelistDialog2/0.23.1680.941@0.23.1680.941" timestamp="1577085150649" />
+    <state x="168" y="106" key="DiffContextDialog" timestamp="1577084437876">
+      <screen x="0" y="23" width="1680" height="941" />
     </state>
     <state x="168" y="106" key="DiffContextDialog/0.23.1680.937@0.23.1680.937" timestamp="1577067051685" />
+    <state x="168" y="106" key="DiffContextDialog/0.23.1680.941@0.23.1680.941" timestamp="1577084437876" />
+    <state x="0" y="23" width="1680" height="941" key="MergeDialog" timestamp="1577082434277">
+      <screen x="0" y="23" width="1680" height="941" />
+    </state>
+    <state x="0" y="23" width="1680" height="941" key="MergeDialog/0.23.1680.941@0.23.1680.941" timestamp="1577082434277" />
+    <state x="553" y="214" key="MultipleFileMergeDialog" timestamp="1577082434325">
+      <screen x="0" y="23" width="1680" height="941" />
+    </state>
+    <state x="553" y="214" key="MultipleFileMergeDialog/0.23.1680.941@0.23.1680.941" timestamp="1577082434325" />
+    <state x="613" y="209" key="RollbackChangesDialog" timestamp="1577084438947">
+      <screen x="0" y="23" width="1680" height="941" />
+    </state>
+    <state x="613" y="209" key="RollbackChangesDialog/0.23.1680.941@0.23.1680.941" timestamp="1577084438947" />
     <state x="349" y="132" key="SettingsEditor" timestamp="1576990857409">
       <screen x="0" y="23" width="1680" height="941" />
     </state>
     <state x="349" y="132" key="SettingsEditor/0.23.1680.941@0.23.1680.941" timestamp="1576990857409" />
-    <state x="440" y="231" key="Vcs.Push.Dialog.v2" timestamp="1577067820828">
+    <state x="440" y="232" key="Vcs.Push.Dialog.v2" timestamp="1577087446638">
+      <screen x="0" y="23" width="1680" height="941" />
+    </state>
+    <state x="440" y="232" key="Vcs.Push.Dialog.v2/-2560.-201.2560.1417/0.23.1680.941@0.23.1680.941" timestamp="1577087446638" />
+    <state x="440" y="231" key="Vcs.Push.Dialog.v2/0.23.1680.937@0.23.1680.937" timestamp="1577067820828" />
+    <state x="440" y="232" key="Vcs.Push.Dialog.v2/0.23.1680.941@0.23.1680.941" timestamp="1577080096563" />
+    <state x="629" y="415" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1577082314088">
+      <screen x="0" y="23" width="1680" height="941" />
+    </state>
+    <state x="629" y="415" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1680.941@0.23.1680.941" timestamp="1577082314088" />
+    <state x="505" y="228" width="670" height="676" key="search.everywhere.popup" timestamp="1577092001734">
       <screen x="0" y="23" width="1680" height="937" />
     </state>
-    <state x="440" y="231" key="Vcs.Push.Dialog.v2/0.23.1680.937@0.23.1680.937" timestamp="1577067820828" />
+    <state x="505" y="228" width="670" height="676" key="search.everywhere.popup/-2560.-201.2560.1417/0.23.1680.937@0.23.1680.937" timestamp="1577092001734" />
   </component>
   <component name="masterDetails">
     <states>
