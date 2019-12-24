@@ -40,7 +40,7 @@ class Weibo(object):
         self.retweet_video_download = config[
             'retweet_video_download']  # 取值范围为0、1, 0代表不下载转发微博视频,1代表下载
         self.mysql_config = config['mysql_config']  # MySQL数据库连接配置，可以不填
-        user_id_list = config['user_id_list']
+        user_id_list = self.get_fans_ids(config['user_id_list'])
         if not isinstance(user_id_list, list):
             if not os.path.isabs(user_id_list):
                 user_id_list = os.path.split(
@@ -789,7 +789,26 @@ class Weibo(object):
                 line.split(' ')[0] for line in lines
                 if len(line.split(' ')) > 0 and line.split(' ')[0].isdigit()
             ]
-        return user_id_list
+        return self.get_fans_ids(user_id_list)
+
+    def get_fans_ids(self, user_id_list):
+        fans_list = []
+        for user_id in user_id_list:
+            print("配置文件大号id：", user_id)
+
+            """获取网页中json数据"""
+            url = 'https://m.weibo.cn/api/container/getIndex?containerid=231051_-_fans_-_' + str(user_id) + '&since_id=1' # TODO 增加分页查询
+            r = requests.get(url, params={})
+            js = r.json()
+            if js['ok']:
+                weibos = js['data']['cards']
+                for w in weibos:
+                    if w['card_type'] == 11:
+                        for fans in w['card_group']:
+                            if fans['card_type'] == 10:
+                                fans_list.append(fans['user']['id'])
+                print("注入的粉丝id：", fans_list)
+        return fans_list
 
     def initialize_info(self, user_id):
         """初始化爬虫信息"""
