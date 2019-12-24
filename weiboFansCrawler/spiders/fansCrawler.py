@@ -6,6 +6,7 @@ import scrapy
 import re
 import json
 import time
+import random
 
 
 class FanscrawlerSpider(scrapy.Spider):
@@ -32,26 +33,26 @@ class FanscrawlerSpider(scrapy.Spider):
         }
         # 指定cookies
         cookies = {
-            'ALF': '1577672083',
-            'Apache': '6268048979834.457.1577067237128',
-            'SCF': 'ApujhM8uDdqNvzdLTqI849Z5w7PGPP8Cse1Ti5EtzTJiM3Qk4qSRPWtU1_UKbbPeH-4IZ75KEydqbO3FIeQRI0E.',
-            'SINAGLOBAL': '6268048979834.457.1577067237128',
-            'SSOLoginState': '1577067234',
-            'SUB': '_2A25zBFNFDeRhGeNN6VAT8CfJzT6IHXVQcMONrDV8PUNbmtAKLUbYkW9NSd-4-wxdg9wEXMJMk8r9xJdpNyZ5JlpJ',
-            'SUBP': '0033WrSXqPxfM725Ws9jqgMF55529P9D9WhEE0KKnuqJiTM-1Qw8R3q_5JpX5K2hUgL.Fo-0eozEeh.fSoz2dJLoIEXLxKBLBonL12zLxK-LBo2LBo2LxK-LB.BL1KeLxK-L1KzL12eLxK-LBo5L1-2t',
-            'SUHB': '0xnClA7lVuxlH4',
-            'ULV': '1577067237134:1:1:1:6268048979834.457.1577067237128:',
-            'UOR': ',,www.baidu.com',
-            'Ugrow-G0': '7e0e6b57abe2c2f76f677abd9a9ed65d',
-            'YF-Page-G0': '753ea17f0c76317e0e3d9670fa168584|1576995465|1576995464',
-            'YF-V5-G0': 'b588ba2d01e18f0a91ee89335e0afaeb',
-            '_s_tentry': '-',
-            'cross_origin_proto': 'SSL',
-            'login_sid_t': 'e85dd926c0edc739aa417b91fef1877f',
-            'un': '17621142248',
-            'wb_view_log': '1680*10502',
-            'wb_view_log_5322209562': '1680*10502',
-            'webim_unReadCount': '%7B%22time%22%3A1577067588477%2C%22dm_pub_total%22%3A0%2C%22chat_group_client%22%3A0%2C%22allcountNum%22%3A3%2C%22msgbox%22%3A0%7D',
+            # 'ALF': '1577672083',
+            # 'Apache': '6268048979834.457.1577067237128',
+            'SCF': 'AhYAERVc4btt_ZIfxmIJj-vc2EV8AB2r4pBrS3eneyFeAHYQRqg82PEI0GhbmuzOgTAvxGMTyAdWaLW23Kju1ys.',
+            'SINAGLOBAL': '2164635642128.6316.1553319913398',
+            'SSOLoginState': '1577156012',
+            'SUB': '_2A25zBQ38DeRhGeRG6lcU9C3IzziIHXVQc3g0rDV8PUNbmtAKLVr2kW9NUig-Z5d2Wry7Uw6DOapNWHxxsWi7dJ7j',
+            'SUBP': '0033WrSXqPxfM725Ws9jqgMF55529P9D9WhrAymGvNJKyKwEjTGQLc8b5JpX5K2hUgL.FozReK-fSheXShB2dJLoI0qLxK-L1-zLB.BLxKqL1-eL12BLxKMLB-eLB-eLxKBLBonL1h5LxKnL1hzLBK-LxKqL1-qLBoBt',
+            'SUHB': '0y0YNAUmY9mccB',
+            # 'ULV': '1577067237134:1:1:1:6268048979834.457.1577067237128:',
+            # 'UOR': ',,www.baidu.com',
+            # 'Ugrow-G0': '7e0e6b57abe2c2f76f677abd9a9ed65d',
+            # 'YF-Page-G0': '753ea17f0c76317e0e3d9670fa168584|1576995465|1576995464',
+            # 'YF-V5-G0': 'b588ba2d01e18f0a91ee89335e0afaeb',
+            # '_s_tentry': '-',
+            # 'cross_origin_proto': 'SSL',
+            'login_sid_t': '2913bbccc08faed00d98bff6e68f447c',
+            'un': '690852990@qq.com',
+            # 'wb_view_log': '1680*10502',
+            # 'wb_view_log_5322209562': '1680*10502',
+            # 'webim_unReadCount': '%7B%22time%22%3A1577067588477%2C%22dm_pub_total%22%3A0%2C%22chat_group_client%22%3A0%2C%22allcountNum%22%3A3%2C%22msgbox%22%3A0%7D',
             # 'TC-Page-G0': '753ea17f0c76317e0e3d9670fa168584|1576995465|1576995464',
             # 'TC-V5-G0': 'eb26629f4af10d42f0485dca5a8e5e20',
             #
@@ -131,9 +132,14 @@ class FanscrawlerSpider(scrapy.Spider):
             fansids = virtual_response.css("img::attr(usercard)").extract()
             # fansids = response.css(".S_txt1 a::attr(href)").extract()
             print('爬取的好友id列表：', fansids)
+            if not fansids:
+                continue
 
             if next_pages is not None:
-                self.recursivePageInfo(response, next_pages)
+                # urlJoin 处理相对路径
+                next_page = response.urljoin(next_pages)
+                print('捕获到下一页：', next_page)
+                yield scrapy.Request(next_page, callback=self.parse)
             # 粉丝信息写入文件
             for fansid in fansids:
                 self.dealFansId(fansid, filetxt)
@@ -145,27 +151,18 @@ class FanscrawlerSpider(scrapy.Spider):
                 self.existDunpFile(configpath, fansids, filetxt)
             else:
                 self.notExistDumpFile(configpath, fansids, filetxt)
-        time.sleep(1)
+        time.sleep(random.randint(2, 10))
         print('粉丝总数：', self.count)
 
-
-    def dealFansId(self,fansid, filetxt):
+    def dealFansId(self, fansid, filetxt):
         print('爬取的好友id：', fansid.split("&")[0][3:])
         with open(filetxt, 'a+') as ft:
             ft.write(fansid.split("&")[0][3:] + ' ')
         self.count = self.count + 1
         self.log('Saved file %s' % filetxt)
 
-
-    def recursivePageInfo(self,response, next_pages):
-        # urlJoin 处理相对路径
-        next_page = response.urljoin(next_pages)
-        print('捕获到下一页：', next_page)
-        yield scrapy.Request(next_page, callback=self.parse)
-
-
     # 写入已经存在的文件
-    def existDunpFile(self,configpath, fansids, filetxt):
+    def existDunpFile(self, configpath, fansids, filetxt):
         # 读取文件 读取时候文件指针放在文件头部
         with open(configpath, 'r+') as load_f:
             load_dict = json.load(load_f)
@@ -184,9 +181,8 @@ class FanscrawlerSpider(scrapy.Spider):
                     print("重置后文件指针位置", load_f.tell())
                     json.dump(load_dict, load_f)
 
-
     # 写入不存在的文件
-    def notExistDumpFile(self,configpath, fansids, filetxt):
+    def notExistDumpFile(self, configpath, fansids, filetxt):
         # 文件不存在直接写一个config
         with open(configpath, 'w') as cf:
             # 创建赋值
@@ -194,10 +190,15 @@ class FanscrawlerSpider(scrapy.Spider):
                 dict = {'user_id_list': [],
                         'filter': 1,
                         'since_date': time.strftime('%Y-%m-%d', time.localtime(time.time())),
-                        'write_mode': ["csv"], 'mysql_config': {
-                        'host': 'localhost', 'port': 3306, 'user': 'root', 'password': '123456',
-                        'charset': 'utf8mb4'
-                    }}
+                        "retweet_pic_download": 1,
+                        "original_pic_download": 1,
+                        "original_video_download": 1,
+                        "retweet_video_download": 1,
+                        'write_mode': ["mysql"],
+                        'mysql_config': {
+                            'host': 'localhost', 'port': 3306, 'user': 'root', 'password': '123456',
+                            'charset': 'utf8mb4'
+                        }}
 
                 print("新创建的config对象", json.dumps(dict))
                 print("文件名字", filetxt)
