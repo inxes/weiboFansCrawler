@@ -19,6 +19,7 @@ from requests.adapters import HTTPAdapter
 from tqdm import tqdm
 import time
 
+
 class Weibo(object):
     def __init__(self, config):
         """Weibo类初始化"""
@@ -40,10 +41,10 @@ class Weibo(object):
         self.retweet_video_download = config[
             'retweet_video_download']  # 取值范围为0、1, 0代表不下载转发微博视频,1代表下载
         self.mysql_config = config['mysql_config']  # MySQL数据库连接配置，可以不填
+        self.crawl_hierarchy = config['crawl_hierarchy']  # 爬虫递归层级
         self.fans_list = []  # 大号粉丝列表
-        self.fans_from_id = ''  # 被关注者用户id
-        self.get_fans_ids(config['user_id_list'], 1).extend(config['user_id_list'])
-        user_id_list = self.fans_list
+        self.fans_from_id = {}  # 被关注者用户id
+        user_id_list = config['user_id_list']
         print("爬取用户列表：", user_id_list)
         if not isinstance(user_id_list, list):
             if not os.path.isabs(user_id_list):
@@ -57,14 +58,6 @@ class Weibo(object):
         self.weibo = []  # 存储爬取到的所有微博信息
         self.weibo_id_list = []  # 存储爬取到的所有微博id
 
-        self.mysql_config = {
-            'host': '127.0.0.1',
-            'port': 3306,
-            'user': 'root',
-            'password': 'a8887880',
-            'charset': 'utf8mb4'
-        }
-
     def validate_config(self, config):
         """验证配置是否正确"""
 
@@ -77,6 +70,8 @@ class Weibo(object):
             if config[argument] != 0 and config[argument] != 1:
                 sys.exit(u'%s值应为0或1,请重新输入' % config[argument])
 
+        if config['crawl_hierarchy'] not in (1, 2, 3):
+            sys.exit('crawl_hierarchy因为1，2，3，请重新输入')
         # 验证since_date
         since_date = str(config['since_date'])
         if (not self.is_date(since_date)) and (not since_date.isdigit()):
@@ -406,7 +401,8 @@ class Weibo(object):
         if "-" in weibo_info['created_at']:
             weibo['created_at'] = weibo_info['created_at']
         else:
-            weibo['created_at'] = time.strftime("%Y-%m-%d %H:%M:%S", time.strptime(weibo_info['created_at'],"%a %b %d %H:%M:%S %z %Y"))
+            weibo['created_at'] = time.strftime("%Y-%m-%d %H:%M:%S",
+                                                time.strptime(weibo_info['created_at'], "%a %b %d %H:%M:%S %z %Y"))
         weibo['source'] = weibo_info['source']
         weibo['attitudes_count'] = self.string_to_int(
             weibo_info.get('attitudes_count', 0))
@@ -416,7 +412,7 @@ class Weibo(object):
             weibo_info.get('reposts_count', 0))
         weibo['topics'] = self.get_topics(selector)
         weibo['at_users'] = self.get_at_users(selector)
-        weibo['fans_from_id'] = self.fans_from_id
+        weibo['fans_from_id'] = self.fans_from_id.get(weibo_info['user']['id'], 0)
         weibo['comment_from_id'] = weibo_info.get('comment_from_id', 0)
         return self.standardize_info(weibo)
 
@@ -824,36 +820,38 @@ class Weibo(object):
                 line.split(' ')[0] for line in lines
                 if len(line.split(' ')) > 0 and line.split(' ')[0].isdigit()
             ]
-        return self.get_fans_ids(user_id_list, 1)
 
-    # TODO 获取粉丝id列表
-    def get_fans_ids(self, user_id_list, page):
         for user_id in user_id_list:
-            print("配置文件大号id：%s" % user_id)
-            self.fans_from_id = user_id
-
-            """获取网页中微博json数据"""
-            url = 'https://m.weibo.cn/api/container/getIndex?containerid=231051_-_fans_-_%s&since_id=%s' % (
-            user_id, str(page))
-            r = requests.get(url)
-            js = r.json()
-
-            if js['ok'] == 1:
-                weibos = js['data']['cards']
-                if weibos:
-                    for w in weibos:
-                        if w['card_type'] == 11:
-                            for fans in w['card_group']:
-                                if fans['card_type'] == 10:
-                                    self.fans_list.append(fans['user']['id'])
-                    print("注入的粉丝id数：%d" % len(self.fans_list))
-            else:
-                print("爬取失败的返回结果", js)
-                break
-            print(u'第%d页' % page)
-            sleep(random.randint(2, 5))
-            self.get_fans_ids(user_id_list, page + 1)
+            self.get_fans_ids(user_id, 1)
+        self.user_id_list = self.fans_list
         return self.fans_list
+
+            # TODO 获取粉丝id列表
+    def get_fans_ids(self, user_id, page):
+        print("配置文件大号id：%s" % user_id)
+
+        """获取网页中微博json数据"""
+        url = 'https://m.weibo.cn/api/container/getIndex?containerid=231051_-_fans_-_%s&since_id=%s' % (
+            user_id, str(page))
+        r = requests.get(url)
+        js = r.json()
+
+        if js['ok'] == 1:
+            weibos = js['data']['cards']
+            if weibos:
+                for w in weibos:
+                    if w['card_type'] == 11:
+                        for fans in w['card_group']:
+                            if fans['card_type'] == 10:
+                                self.fans_from_id[fans['user']['id']] = user_id
+                                self.fans_list.append(fans['user']['id'])
+                print("注入的粉丝id数：%d" % len(self.fans_list))
+        else:
+            print("爬取失败的返回结果", js)
+            return
+        print(u'第%d页' % page)
+        sleep(random.randint(2, 5))
+        self.get_fans_ids(user_id, page + 1)
 
     def initialize_info(self, user_id):
         """初始化爬虫信息"""
@@ -863,7 +861,7 @@ class Weibo(object):
         self.user_id = user_id
         self.weibo_id_list = []
 
-    def start(self):
+    def start(self, count):
         """运行爬虫"""
         try:
             for user_id in self.user_id_list:
@@ -880,6 +878,12 @@ class Weibo(object):
                         self.download_files('img', 'retweet')
                     if self.retweet_video_download:
                         self.download_files('video', 'retweet')
+            if self.crawl_hierarchy > count:
+                for user_id in self.user_id_list:
+                    self.get_fans_ids(user_id, 1)
+                self.user_id_list = self.fans_list
+
+                self.start(count + 1)
         except Exception as e:
             print('Error: ', e)
             traceback.print_exc()
@@ -895,7 +899,7 @@ def main():
         with open(config_path) as f:
             config = json.loads(f.read())
         wb = Weibo(config)
-        wb.start()  # 爬取微博信息
+        wb.start(1)  # 爬取微博信息
     except ValueError:
         print(u'config.json 格式不正确，请参考 '
               u'https://github.com/dataabc/weibo-crawler#3程序设置')
