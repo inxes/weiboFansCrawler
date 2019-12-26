@@ -192,6 +192,12 @@ class Weibo(object):
             user_info['verified'] = info.get('verified', False)
             user_info['verified_type'] = info.get('verified_type', 0)
             user_info['verified_reason'] = info.get('verified_reason', '')
+            user_info['fans_from_id'] = self.fans_from_id.get(self.user_id, 0)
+            if self.fans_from_id.get(self.user_id):
+                user_info['fans_from_id'] = str(self.fans_from_id[self.user_id]) + ',' + str(self.user_id)
+            else:
+                user_info['fans_from_id'] = self.user_id
+
             user = self.standardize_info(user_info)
             self.user = user
             self.user_to_database()
@@ -398,11 +404,15 @@ class Weibo(object):
         weibo['pics'] = self.get_pics(weibo_info)
         weibo['video_url'] = self.get_video_url(weibo_info)
         weibo['location'] = self.get_location(selector)
-        if "-" in weibo_info['created_at']:
+        if '昨天' in weibo_info['created_at']:
+            weibo['created_at'] = weibo['created_at'][:3]
+        elif '小时前' in weibo_info['created_at']:
+            weibo['created_at'] = (datetime.now() - timedelta(days=weibo['created_at'][:-3])).strftime("%Y-%m-%d %H:%M:%S")
+        elif "-" in weibo_info['created_at']:
             weibo['created_at'] = weibo_info['created_at']
         else:
-            weibo['created_at'] = time.strftime("%Y-%m-%d %H:%M:%S",
-                                                time.strptime(weibo_info['created_at'], "%a %b %d %H:%M:%S %z %Y"))
+            weibo['created_at'] = time.strftime("%Y-%m-%d %H:%M:%S", time.strptime(weibo_info['created_at'], "%a %b %d %H:%M:%S %z %Y"))
+
         weibo['source'] = weibo_info['source']
         weibo['attitudes_count'] = self.string_to_int(
             weibo_info.get('attitudes_count', 0))
@@ -549,9 +559,25 @@ class Weibo(object):
             datas = datass.get('data')
             if datas:
                 for data in datas:
-                    data['comment_from_id'] = weibo_id
-                    print('插入评论：', data)
-                    self.mysql_insert(self.mysql_config, 'weibo', [self.parse_weibo(data)])
+
+                    if '昨天 ' in data['created_at']:
+                        created_at = data['created_at'][:3]
+                    elif '昨天' in data['created_at']:
+                        created_at = (datetime.now() - timedelta(days=1)).strftime(
+                            "%Y-%m-%d %H:%M:%S")
+                    elif '小时前' in data['created_at']:
+                        created_at = (datetime.now() - timedelta(days=data['created_at'][:-3])).strftime(
+                            "%Y-%m-%d %H:%M:%S")
+                    elif "-" in data['created_at']:
+                        created_at = data['created_at']
+                    else:
+                        created_at = time.strftime("%Y-%m-%d %H:%M:%S", time.strptime(data['created_at'],"%a %b %d %H:%M:%S %z %Y"))
+                    since_date = datetime.strptime(
+                        self.since_date, "%Y-%m-%d")
+                    if created_at > since_date:
+                        data['comment_from_id'] = weibo_id
+                        print('插入评论：', data)
+                        self.mysql_insert(self.mysql_config, 'weibo', [self.parse_weibo(data)])
 
     def get_page_count(self):
         """获取微博页数"""
@@ -826,7 +852,8 @@ class Weibo(object):
         self.user_id_list = self.fans_list
         return self.fans_list
 
-            # TODO 获取粉丝id列表
+        # TODO 获取粉丝id列表
+
     def get_fans_ids(self, user_id, page):
         print("配置文件大号id：%s" % user_id)
 
@@ -834,7 +861,11 @@ class Weibo(object):
         url = 'https://m.weibo.cn/api/container/getIndex?containerid=231051_-_fans_-_%s&since_id=%s' % (
             user_id, str(page))
         r = requests.get(url)
-        js = r.json()
+        if r:
+            js = r.json()
+        else:
+            print('爬取页面为空：', url)
+            return
 
         if js['ok'] == 1:
             weibos = js['data']['cards']
@@ -843,14 +874,17 @@ class Weibo(object):
                     if w['card_type'] == 11:
                         for fans in w['card_group']:
                             if fans['card_type'] == 10:
-                                self.fans_from_id[fans['user']['id']] = user_id
+                                if self.fans_from_id.get(fans['user']['id']):
+                                    self.fans_from_id[fans['user']['id']] = str(self.fans_from_id[fans['user']['id']]) + ',' + str(user_id)
+                                else:
+                                    self.fans_from_id[fans['user']['id']] = user_id
                                 self.fans_list.append(fans['user']['id'])
                 print("注入的粉丝id数：%d" % len(self.fans_list))
         else:
             print("爬取失败的返回结果", js)
             return
-        print(u'第%d页' % page)
-        sleep(random.randint(2, 5))
+        print('爬取粉丝列表url：', url)
+        sleep(random.randint(2, 4))
         self.get_fans_ids(user_id, page + 1)
 
     def initialize_info(self, user_id):
@@ -878,15 +912,23 @@ class Weibo(object):
                         self.download_files('img', 'retweet')
                     if self.retweet_video_download:
                         self.download_files('video', 'retweet')
-            if self.crawl_hierarchy > count:
+            if count <= self.crawl_hierarchy:
                 for user_id in self.user_id_list:
                     self.get_fans_ids(user_id, 1)
-                self.user_id_list = self.fans_list
+                self.user_id_list = self. fans_list
 
                 self.start(count + 1)
         except Exception as e:
             print('Error: ', e)
             traceback.print_exc()
+
+    def change_date(self):
+        with open('config.json', 'r+') as load_f:
+            load_dict = json.load(load_f)
+            print("读取到的json内容:", load_dict)
+            load_dict['since_date'] = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+            load_f.seek(0, 0)
+            json.dump(load_dict, load_f)
 
 
 def main():
@@ -900,10 +942,10 @@ def main():
             config = json.loads(f.read())
         wb = Weibo(config)
         wb.start(1)  # 爬取微博信息
+        wb.change_date()  # 修改配置文件写入开始时间
     except ValueError:
         print(u'config.json 格式不正确，请参考 '
               u'https://github.com/dataabc/weibo-crawler#3程序设置')
-        traceback.print_exc()
     except Exception as e:
         print('Error: ', e)
         traceback.print_exc()
